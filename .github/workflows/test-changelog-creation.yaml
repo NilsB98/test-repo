@@ -18,7 +18,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.PAT }}
       run: |
         echo "changelog $(date)" >> CHANGELOG.yaml
-        docker run -it -v "$(pwd)":/usr/local/src/your-app githubchangeloggenerator/github-changelog-generator --user NilsB98 --project test-repo -t $GITHUB_TOKEN --include-tags-regex "dbp-moodle.*" -o CHANGELOG_dbp-moodle.md
+        docker run -v "$(pwd)":/usr/local/src/your-app githubchangeloggenerator/github-changelog-generator --user NilsB98 --project test-repo -t $GITHUB_TOKEN --include-tags-regex "dbp-moodle.*" -o CHANGELOG_dbp-moodle.md
 
     - name: Commit files
       run: |
