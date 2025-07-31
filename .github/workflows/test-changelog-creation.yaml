@@ -15,7 +15,7 @@ jobs:
 
     - name: Create CHANGELOG.yaml
       run: |
-        echo "changelog" > CHANGELOG.yaml
+        echo "changelog $(date)" >> CHANGELOG.yaml
 
     - name: Commit files
       run: |
