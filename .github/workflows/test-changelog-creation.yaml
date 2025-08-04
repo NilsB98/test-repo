@@ -5,38 +5,15 @@ on:
   workflow_dispatch:
 
 jobs:
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
-          token: ${{ secrets.PAT }}
-      - name: Commit files
-        run: |
-          echo "Test" > test.txt
-          git add .
-          git config --local user.email "test@test.com"
-          git config --local user.name "Test"
-          git commit -a -m "Add changes"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PAT }}
-          branch: ${{ github.ref_name }}
-          force_with_lease: true
-
   changelog_creation:
     permissions:
       contents: write
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0 
-        token: ${{ secrets.PAT }}
+        ssh-key: ${{ secrets.DEPLOYKEY_PRIVATE }}
     - name: Create CHANGELOG.yaml
       run: |
         chmod +x ./changelog-generator.sh
@@ -47,10 +24,4 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add .
         git commit -a -m "Changelog"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.PAT }}
-        branch: ${{ github.ref_name }}
-        force_with_lease: true
-
+        git push
