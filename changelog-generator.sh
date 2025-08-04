@@ -18,7 +18,7 @@ tags=($(echo "${tags[@]}" | tr ' ' '\n' | tac))
 
 # Check if we have enough tags
 if [ ${#tags[@]} -lt 1 ]; then
-    echo "test" > "$changelog_file"
+    echo "test $(date)" > "$changelog_file"
     exit 0
 fi
 
